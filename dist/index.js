@@ -1,5 +1,11 @@
 'use strict';
 
+/**
+ * a custom trace module for pandora
+ * By lingxuan630
+ * email: lingxuan630@gmail.com
+ */
+
 const pandora = require('dorapan');
 
 class Report extends pandora.Patcher {
@@ -7,10 +13,6 @@ class Report extends pandora.Patcher {
     super();
 
     this.traceManager = this.getTraceManager();
-
-    if (!this.traceManager) {
-      console.error('customTrace:', 'can not get traceManager');
-    }
 
     this.report = this.report.bind(this);
   }
@@ -37,12 +39,28 @@ class Report extends pandora.Patcher {
     });
   }
 
-  report(spanName = 'custom', content) {
+  report(spanName = 'custom', tags) {
+    if (typeof spanName === 'object') {
+      tags = spanName;
+      spanName = 'custom';
+    }
+
+    if (!this.traceManager) {
+      console.error('customTrace:', 'can not get traceManager');
+      return false;
+    }
+
     const tracer = this.traceManager.getCurrentTracer();
 
+    if (!tracer) {
+      console.info('customTrace:', 'current tracer is empty');
+      return false;
+    }
     const span = this.createSpan(tracer, spanName);
 
-    span.addTags(content);
+    if (tags && typeof tags === 'object') {
+      span.addTags(tags);
+    }
   }
 }
 
