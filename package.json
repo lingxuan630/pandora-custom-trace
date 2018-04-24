@@ -1,6 +1,6 @@
 {
   "name": "pandora-custom-trace",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "custom trace module for pandorajs",
   "main": "dist/index.js",
   "scripts": {
