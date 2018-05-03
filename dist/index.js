@@ -61,6 +61,8 @@ class Report extends pandora.Patcher {
     if (tags && typeof tags === 'object') {
       span.addTags(tags);
     }
+
+    console.log(spanName, tags);
   }
 }
 
