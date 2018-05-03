@@ -62,7 +62,14 @@ class Report extends pandora.Patcher {
       span.addTags(tags);
     }
 
-    console.log(spanName, tags);
+    let reportTags;
+    try {
+      reportTags = JSON.stringify(tags);
+    } catch (e) {
+      reportTags = tags;
+    }
+
+    console.log(spanName, reportTags);
   }
 }
 
